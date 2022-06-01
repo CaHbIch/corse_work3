@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect
-
 from api.api import api
 from classes.bookmarks_class import Bookmarks
 from classes.comments_classes import CommentPost

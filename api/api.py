@@ -32,3 +32,5 @@ def page_post_pk(post_id):
     logger_api.info(f"запрос постов по {post_id}")
     get_post = data_posts.get_post_by_pk(post_id)
     return jsonify(get_post)
+
+
