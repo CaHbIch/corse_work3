@@ -11,8 +11,7 @@ class DataPosts:
     def get_posts_all(self):
         """Возвращает все посты"""
         with open(self.path, "r", encoding="UTF-8") as file:
-            file = json.load(file)
-            return file
+            return json.load(file)
 
     def get_posts_by_user(self, poster_name):
         """ Возвращает посты определенного пользователя по имени"""
@@ -36,3 +35,5 @@ class DataPosts:
             if int(pk) == post["pk"]:
                 return post
 
+# dp=DataPosts("../data/data.json")
+# print(dp.get_posts_all())

@@ -1,3 +1,5 @@
+import os.path
+
 from flask import Flask, render_template, request, redirect
 from api.api import api
 from classes.bookmarks_class import Bookmarks
@@ -9,6 +11,8 @@ app = Flask(__name__)
 
 app.config['JSON_AS_ASCII'] = False
 app.config['JSON_SORT_KEYS'] = False
+
+
 
 data_posts = DataPosts(DATA_PATH)
 comment_post = CommentPost(COMMAENTS_PATH)
