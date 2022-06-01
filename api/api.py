@@ -7,7 +7,7 @@ data_posts = DataPosts(DATA_PATH)
 
 # Логирование
 logger_api = logging.getLogger("api")  # Создаем логгер
-file_handler = logging.FileHandler("logs/api.log")  # Записываем логи в файл
+file_handler = logging.FileHandler("./logs/api.log")  # Записываем логи в файл
 
 logger_api.setLevel("INFO")  # Уровень записи в логи
 formatter_api = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")  # В каком формате будет запись
