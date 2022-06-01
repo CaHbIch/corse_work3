@@ -1,7 +1,7 @@
 import os.path
 
 from flask import Flask, render_template, request, redirect
-from api.api import api
+# from api.api import api
 from classes.bookmarks_class import Bookmarks
 from classes.comments_classes import CommentPost
 from config import DATA_PATH, COMMAENTS_PATH, BOOKMARKS_PATH
@@ -12,13 +12,11 @@ app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 app.config['JSON_SORT_KEYS'] = False
 
-
-
 data_posts = DataPosts(DATA_PATH)
 comment_post = CommentPost(COMMAENTS_PATH)
 bookmarks = Bookmarks(BOOKMARKS_PATH)
 
-app.register_blueprint(api)
+# app.register_blueprint(api)
 
 
 @app.route('/')
@@ -32,17 +30,7 @@ def post():
 @app.route("/post/<int:post_id>/")
 def view_post(post_id):
     """ Реализует просмотр поста"""
-    post = data_posts.get_post_by_pk(post_id)
-    words = post["content"].split()  # Сохраняем текст тут
-    content_with_links = []
-
-    for word in words:
-        if word.startswith("#"):
-            content_with_links.append(f'<a href="/tag/{word}">{word}</a>')
-        else:
-            content_with_links.append(word)
-    post["content"] = " ".join(content_with_links)
-
+    post = data_posts.tag_replace(post_id)
     return render_template("post.html", posts=comment_post.get_comments_by_post_id(post_id),
                            count_comment=len(comment_post.get_comments_by_post_id(post_id)),
                            post=post)
@@ -65,10 +53,10 @@ def page_user(username):
     return render_template("user-feed.html", user_posts=data_posts.get_posts_by_user(username))
 
 
-@app.route("/tag/")
-def page_tag():
+@app.route("/tag/<tagname>")
+def page_tag(tagname):
     """ Реализует переход по тегам"""
-    tagnames = data_posts.search_post_tag()
+    tagnames = data_posts.tag_names(tagname)
     return render_template("tag.html", tagnames=tagnames)
 
 
