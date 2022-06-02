@@ -1,7 +1,7 @@
 import os.path
 
 from flask import Flask, render_template, request, redirect
-# from api.api import api
+from api.api import api
 from classes.bookmarks_class import Bookmarks
 from classes.comments_classes import CommentPost
 from config import DATA_PATH, COMMAENTS_PATH, BOOKMARKS_PATH
@@ -16,7 +16,7 @@ data_posts = DataPosts(DATA_PATH)
 comment_post = CommentPost(COMMAENTS_PATH)
 bookmarks = Bookmarks(BOOKMARKS_PATH)
 
-# app.register_blueprint(api)
+app.register_blueprint(api)
 
 
 @app.route('/')
