@@ -1,5 +1,6 @@
 import json
 from os import path
+from pprint import pp
 
 from config import DATA_PATH
 
@@ -44,7 +45,7 @@ class DataPosts:
 
         for word in words:
             if word.startswith("#"):
-                content_with_links.append(f'<a href="/tag/{word}">{word}</a>')
+                content_with_links.append(f'<a href="/tag/{word[1:]}/">{word}</a>')
             else:
                 content_with_links.append(word)
 
@@ -52,13 +53,14 @@ class DataPosts:
         return post
 
     def tag_names(self, tagname):
-        tag_posts = self.get_posts_all()
-        tag_ref = []
-        for tag_post in tag_posts:
-            tag = tag_post["content"]
-            if tagname in tag:
-                tag_ref.append(f'<a href="/tag/{tag}">{tag}</a>')
-        return tag_ref
+        """ Возвращает посты по тэгами"""
+        tag = []
+        for tag_post in self.search_for_posts(tagname):
+            if tagname in tag_post["content"]:
+                tag.append(tag_post)
+        return tag
+
 
 # dp = DataPosts("../data/data.json")
-# print(dp.tag_names("#елки"))
+# pp(dp.tag_names("#кот"))
+#

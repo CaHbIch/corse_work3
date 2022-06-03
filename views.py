@@ -1,9 +1,7 @@
-import os.path
-
 from flask import Flask, render_template, request, redirect
 from api.api import api
-from classes.bookmarks_class import Bookmarks
-from classes.comments_classes import CommentPost
+from classes.bookmarks import Bookmarks
+from classes.comments import CommentPost
 from config import DATA_PATH, COMMAENTS_PATH, BOOKMARKS_PATH
 from classes.data_classes import DataPosts
 
@@ -53,11 +51,13 @@ def page_user(username):
     return render_template("user-feed.html", user_posts=data_posts.get_posts_by_user(username))
 
 
-@app.route("/tag/<tagname>")
+@app.route("/tag/<tagname>/")
 def page_tag(tagname):
     """ Реализует переход по тегам"""
-    tagnames = data_posts.tag_names(tagname)
-    return render_template("tag.html", tagnames=tagnames)
+    posts = data_posts.search_for_posts("#" + tagname)
+    for post in posts:
+        if tagname in post["content"]:
+            return render_template("tag.html", tagnames=data_posts.tag_names(tagname), search_tag=tagname)
 
 
 @app.route("/bookmarks/add/<post_id>/")

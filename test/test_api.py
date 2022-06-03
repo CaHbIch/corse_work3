@@ -1,6 +1,7 @@
 from views import app
 import pytest
 
+
 class TestApi:
 
     def test_status_code_all_post(self):
