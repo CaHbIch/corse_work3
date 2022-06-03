@@ -1,7 +1,4 @@
 import json
-from os import path
-from pprint import pp
-
 from config import DATA_PATH
 
 
@@ -60,7 +57,3 @@ class DataPosts:
                 tag.append(tag_post)
         return tag
 
-
-# dp = DataPosts("../data/data.json")
-# pp(dp.tag_names("#кот"))
-#
